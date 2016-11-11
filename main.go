@@ -45,5 +45,5 @@ func main() {
 	http.HandleFunc("/upload", handleUpload)
 	http.Handle("/cards/", http.StripPrefix("/cards/", static))
 
-	log.Fatal(http.ListenAndServe(":7000", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
