@@ -25,8 +25,8 @@ func handleUpload(resp http.ResponseWriter, req *http.Request) {
 	card := vcard.VCard{}
 	card.ReadFrom(vcard.NewDirectoryInfoReader(uploadedFile))
 
-	name := uuid.NewV4()
-	file, err := os.Create(fmt.Sprintf("./cards/%s.vcf", name))
+	name := fmt.Sprintf("./cards/%s.vcf", uuid.NewV4())
+	file, err := os.Create(name)
 	if err != nil {
 		panic(err)
 		resp.WriteHeader(http.StatusInternalServerError)
@@ -36,14 +36,16 @@ func handleUpload(resp http.ResponseWriter, req *http.Request) {
 	defer file.Close()
 
 	card.WriteTo(vcard.NewDirectoryInfoWriter(file))
-	resp.WriteHeader(http.StatusNoContent)
+	resp.WriteHeader(http.StatusOK)
+	resp.Write([]byte(name[1:]))
 }
 
 func main() {
+
 	static := http.FileServer(http.Dir("./cards"))
 
 	http.HandleFunc("/upload", handleUpload)
 	http.Handle("/cards/", http.StripPrefix("/cards/", static))
 
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServe(":7000", nil))
 }
