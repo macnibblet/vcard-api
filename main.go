@@ -41,11 +41,16 @@ func handleUpload(resp http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+
+  if port == "" {
+      log.Fatal("$PORT must be set")
+  }
 
 	static := http.FileServer(http.Dir("./cards"))
 
 	http.HandleFunc("/upload", handleUpload)
 	http.Handle("/cards/", http.StripPrefix("/cards/", static))
 
-	log.Fatal(http.ListenAndServe(":7000", nil))
+	log.Fatal(http.ListenAndServe(":" + port || ":7000", nil))
 }
