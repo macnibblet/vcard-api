@@ -2,9 +2,6 @@
 	"ImportPath": "github.com/danstepanov/vcard-api",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "bitbucket.org/llg/vcard",
