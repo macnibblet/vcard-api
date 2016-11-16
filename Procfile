@@ -1,1 +1,1 @@
-web: vcard-api
+web: vcard-api http
