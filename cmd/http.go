@@ -80,5 +80,7 @@ func runHttpServer(ctx *cli.Context) error {
 
 	endpoints.InjectUserRoutes(context, router)
 
-	return http.ListenAndServe(fmt.Sprintf("%s:%s", ctx.String("bind-address"), ctx.Int("port")), nil)
+	fmt.Println("Starting webserver...")
+	
+	return http.ListenAndServe(fmt.Sprintf("%s:%d", ctx.String("bind-address"), ctx.Int("port")), nil)
 }
