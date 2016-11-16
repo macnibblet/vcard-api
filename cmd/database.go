@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	FLAG_DB_DSN = cli.StringFlag{
+	FLAG_DB_DSN = &cli.StringFlag{
 		Name:    "database-dsn",
 		Value:   "host=localhost user=vcard password=vcard dbname=vcard sslmode=disable",
 		EnvVars: []string{"DATABASE_URL"}, // This is for heroku

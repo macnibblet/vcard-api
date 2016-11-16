@@ -12,14 +12,14 @@ var (
 		Usage: "Start the http server",
 		Action: runHttpServer,
 		Flags: []cli.Flag{
-			cli.IntFlag{
+			&cli.IntFlag{
 				Name: "port",
 				Usage: "define the port used to the run the webserver",
 				Value: 7000,
 				EnvVars: []string{"PORT"},
 			},
 
-			cli.StringFlag{
+			&cli.StringFlag{
 				Name: "bind-address",
 				Usage: "Used to bind the listening port to a specific ip address",
 				Value: "",
