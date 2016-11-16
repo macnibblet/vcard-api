@@ -1,17 +1,19 @@
 -- up
 CREATE TABLE users (
-  uuid       UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  uuid       UUID PRIMARY KEY      DEFAULT uuid_generate_v4(),
   email      VARCHAR(255) NOT NULL,
   password   VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP    NOT NULL,
-  updated_at TIMESTAMP    NOT NULL
+  created_at TIMESTAMP    NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE vcards (
-  uuid      UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_uuid UUID        NOT NULL,
-  name      VARCHAR(50) NOT NULL,
-  path      UUID        NOT NULL UNIQUE
+  uuid       UUID PRIMARY KEY     DEFAULT uuid_generate_v4(),
+  user_uuid  UUID        NOT NULL,
+  name       VARCHAR(50) NOT NULL,
+  path       UUID        NOT NULL UNIQUE,
+  created_at TIMESTAMP   NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP   NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE vcards

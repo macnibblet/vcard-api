@@ -9,26 +9,22 @@ import (
 )
 
 func handleUpload(resp http.ResponseWriter, req *http.Request) {
-	if req.Method != http.MethodPost {
-		resp.WriteHeader(http.StatusMethodNotAllowed)
-		return
-	}
 
 	uploadedFile, _, err := req.FormFile("card")
 	if err != nil {
-		panic(err)
 		resp.WriteHeader(http.StatusBadRequest)
+		resp.Write(RESP_MALFORMED_REQUEST)
 		return
 	}
 
 	card := vcard.VCard{}
 	card.ReadFrom(vcard.NewDirectoryInfoReader(uploadedFile))
 
-	name := fmt.Sprintf("./cards/%s.vcf", uuid.NewV4())
+	name := fmt.Sprintf("./static/%s.vcf", uuid.NewV4())
 	file, err := os.Create(name)
 	if err != nil {
-		panic(err)
 		resp.WriteHeader(http.StatusInternalServerError)
+		resp.Write(RESP_INTERNAL_SERVER_ERROR)
 		return
 	}
 

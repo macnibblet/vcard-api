@@ -1,6 +1,9 @@
 package database
 
-import "gopkg.in/pg.v5"
+import (
+	"gopkg.in/pg.v5"
+	"golang.org/x/crypto/bcrypt"
+)
 
 type (
 	UserRepository struct {
@@ -12,7 +15,7 @@ type (
 	}
 )
 
-func (r *UserRepository) GetByEmail(email string) (User, error) {
+func (r *UserRepository) GetByEmail(email string) (*User, error) {
 
 	user := new(User)
 
@@ -21,7 +24,16 @@ func (r *UserRepository) GetByEmail(email string) (User, error) {
 	return user, err
 }
 
-func (r *UserRepository) Create(user User) error {
+func (r *UserRepository) Create(user *User) error {
+
+	password, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+
+	// Update the password with a bcrypt version
+	user.Password = string(password)
+
 	return r.DB.Insert(user)
 }
 
